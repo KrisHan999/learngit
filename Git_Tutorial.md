@@ -50,7 +50,7 @@ $ git config --global user.email "email@example.com"
 
   > 前面讲了我们把文件往Git版本库里添加的时候，是分两步执行的：
   > 
-  > 第一步是用`git add`把文件添加进去，实际上就是把文件修改添加到暂存区；
+  > 第一步是用`git add`把文件添加进去，实际上就是把文件修改添加到**暂存区**；
   > 
   > 第二步是用`git commit`提交更改，实际上就是把暂存区的所有内容提交到当前分支。
   > 
@@ -101,3 +101,33 @@ $ git checkout -- test.txt
 ```
 
 `git checkout`其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。
+
+## 4. 远程仓库
+
+`GitHub`提供了Git仓库托管服务。由于本地Git仓库和GitHub仓库之间的传输是通过SSH加密的，所以需要将**本地的公钥**添加到GitHub的`SSH Key`中。
+
+```
+ssh-keygen -t rsa -C "youremail@example.com"
+```
+
+本机生成的文件路径：`C:\Users\11198;\.ssh`
+
+### 4.1 添加远程库
+
+要**关联一个远程库（GitHub中已经存在一个版本库，要与本地的版本库进行关联）**，使用命令`git remote add origin git@server-name:path/repo-name.git`；
+
+关联后，使用命令`git push -u origin master`第一次推送master分支的所有内容；
+
+此后，每次本地提交后，只要有必要，就可以使用命令`git push origin master`推送最新修改；
+
+### 4.2 从远程库克隆
+
+要克隆一个仓库，首先必须知道仓库的地址，然后使用`git clone`命令克隆。
+
+`git clone git@server-name:path/repo-name.git``
+
+Git支持多种协议，包括`https`，但通过`ssh`支持的原生`git`协议速度最快。
+
+## 5. 分支管理
+
+
