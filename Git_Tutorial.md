@@ -248,3 +248,52 @@ $ git checkout -b dev origin/dev
 4. 没有冲突或者解决掉冲突后，再用`git push origin <branch-name>`推送就能成功！
 
 如果`git pull`提示`no tracking information`，则说明本地分支和远程分支的链接关系没有创建，用命令`git branch --set-upstream-to <branch-name> origin/<branch-name>`。
+
+### 5.6 git fetch和git pull的区别
+
+[https://www.jianshu.com/p/a5c4d2f99807](https://www.jianshu.com/p/a5c4d2f99807)
+
+git fetch从远程分支拉取代码。
+
+fetch常结合merge一起用，`git fetch + git merge == git pull`
+一般要用git fetch+git merge，因为`git pull`会将代码直接**合并**，**造成冲突**等无法知道，fetch代码下来要`git diff orgin/xx`来**看一下差异然后再合并**。
+
+**用法：**
+
+- **git fetch**
+
+- **git fetch origin**
+
+- **git fetch origin branch1**
+
+- **git fetch origin branch1:branch2**
+
+- **git fetch origin :branch2**
+
+
+
+## 6. 标签管理
+
+发布一个版本时，我们通常先在版本库中打一个标签（tag），这样，就**唯一确定了打标签时刻的版本**。将来无论什么时候，取某个标签的版本，就是把那个打标签的时刻的历史版本取出来。所以，**标签也是版本库的一个快照**。
+
+Git的**标签**虽然是版本库的快照，但**其实它就是指向某个commit的指针**（跟分支很像对不对？但是分支可以移动，标签不能移动），所以，**创建和删除标签都是瞬间完成的**。
+
+### 6.1 创建标签
+
+- 命令`git tag <tagname>`用于新建一个标签，默认为`HEAD`，也可以指定一个commit id`git tag <tagname> commit_id` ；
+
+- 命令`git tag -a <tagname> -m "blablabla..." commit_id`可以指定标签信息；
+
+- 命令`git tag`可以查看所有标签。
+
+### 6.2 操作标签
+
+- 命令`git push origin <tagname>`可以推送一个本地标签；
+
+- 命令`git push origin --tags`可以推送全部未推送过的本地标签；
+
+- 命令`git tag -d <tagname>`可以删除一个本地标签；
+
+- 命令`git push origin :refs/tags/<tagname>`可以删除一个远程标签。
+
+
