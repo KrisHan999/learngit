@@ -130,4 +130,65 @@ Git支持多种协议，包括`https`，但通过`ssh`支持的原生`git`协议
 
 ## 5. 分支管理
 
+### 5.1 创建与合并分支
+
+Git鼓励大量使用分支：
+
+查看分支：`git branch`
+
+创建分支：`git branch <branch_name>`
+
+切换分支：`git checkout <branch_name>`
+
+创建+切换分支：`git checkout -b <branch_name>`
+
+合并某分支到当前分支：`git merge <branch_name>`
+
+删除分支：`git branch -d <branch_name>`
+
+### 5.2 解决冲突
+
+如果不同的分支各自都**分别有了新的提交(commit)**，这种情况下，如果要**进行merge**，Git无法执行“快速合并”，只能试图把各自的修改合并起来，如果**修改了同一部分**，就会引起**冲突(conflict)**。
+
+冲突(conflict)举例:
+
+```
+
+<<<<<<< HEAD
+Creating a new branch is quick & simple.
+=======
+Creating a new branch is quick AND simple.
+>>>>>>> feature1
+```
+
+Git用`<<<<<<<`，`=======`，`>>>>>>>`标记出不同分支的内容，我们修改如下后保存：
+
+```
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+Git has a mutable index called stage.
+Git tracks changes of files.
+Creating a new branch is quick and simple.
+```
+
+再提交：
+
+```
+$ git add readme.txt 
+$ git commit -m "conflict fixed"
+[master cf810e4] conflict fixed
+```
+
+用带参数的`git log`也可以看到分支的合并情况：
+
+```
+$ git log --graph --pretty=oneline --abbrev-commit
+```
+
+
+
+
+
+
+
 
