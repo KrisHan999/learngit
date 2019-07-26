@@ -1,1 +1,1 @@
-Git is free software distributed under the GPL.
+Git is a distributed system.
