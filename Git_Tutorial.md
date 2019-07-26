@@ -142,7 +142,7 @@ Git鼓励大量使用分支：
 
 创建+切换分支：`git checkout -b <branch_name>`
 
-合并某分支到当前分支：`git merge <branch_name>`
+合并某分支到当前分支：`git merge <branch_name>`，只改变当前分支。
 
 删除分支：`git branch -d <branch_name>`
 
@@ -185,10 +185,66 @@ $ git commit -m "conflict fixed"
 $ git log --graph --pretty=oneline --abbrev-commit
 ```
 
+### 5.3 分支管理策略
+
+通常，合并分支时，Git会用`Fast forward`模式，但是在这种模式下，删除分支后会丢掉分支信息。如果要强制禁用`Fast forward`模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。
+
+```
+git merge --no-ff -m "merge with no-ff" dev
+```
+
+因为本次合并要创建一个新的commit，所以加上`-m`参数，把commit描述写进去。
+
+### 5.4 Bug分支
+
+修复bug时，我们会通过创建新的bug分支进行修复，然后合并，最后删除；
+
+当手头工作没有完成时，先把工作现场`git stash`一下（会将工作区中修改保留到`stash`中），然后去修复bug，修复后，再`git stash pop`，回到工作现场。
+
+### 5.4 Feature分支
+
+开发一个新feature，最好新建一个分支；
+
+如果要丢弃一个没有被合并过的分支，可以通过`git branch -D <name>`强行删除。
+
+### 5.5 多人协作
+
+**推送分支**
+
+```
+git push origin master
+git push origin dev
+```
+
+**抓取分支**
+
+多人协作时，大家都会往`master`和`dev`分支上推送各自的修改。
+
+当你的小伙伴**从远程库clone**时，默认情况下，你的小伙伴**只能看到本地的`master`分支**。
+
+```
+$ git branch
+* master
+```
+
+现在，你的小伙伴要在`dev`分支上开发，就必须创建远程`origin`的`dev`分支到本地，于是他用这个命令创建本地`dev`分支：
+
+```
+$ git checkout -b dev origin/dev
+```
+
+现在，他就可以在`dev`上继续修改，然后，时不时地把`dev`分支`push`到远程
 
 
 
+因此，多人协作的工作模式通常是这样：
 
+1. 首先，可以试图用`git push origin <branch-name>`推送自己的修改；
 
+2. 如果推送失败，则因为远程分支比你的本地更新，需要先用`git pull`试图合并；
 
+3. 如果合并有冲突，则解决冲突，并在本地提交；
 
+4. 没有冲突或者解决掉冲突后，再用`git push origin <branch-name>`推送就能成功！
+
+如果`git pull`提示`no tracking information`，则说明本地分支和远程分支的链接关系没有创建，用命令`git branch --set-upstream-to <branch-name> origin/<branch-name>`。
