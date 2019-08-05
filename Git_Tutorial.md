@@ -247,7 +247,7 @@ $ git checkout -b dev origin/dev
 
 4. 没有冲突或者解决掉冲突后，再用`git push origin <branch-name>`推送就能成功！
 
-如果`git pull`提示`no tracking information`，则说明本地分支和远程分支的链接关系没有创建，用命令`git branch --set-upstream-to <branch-name> origin/<branch-name>`。
+如果`git pull`提示`no tracking information`，则说明本地分支和远程分支的链接关系没有创建，用命令`git branch --set-upstream-to=origin/<branch-name> <branch-name> `。
 
 ### 5.6 git fetch和git pull的区别
 
